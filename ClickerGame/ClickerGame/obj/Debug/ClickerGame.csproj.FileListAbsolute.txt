@@ -1,0 +1,10 @@
+C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\bin\Debug\ClickerGame.exe.config
+C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\bin\Debug\ClickerGame.exe
+C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\bin\Debug\ClickerGame.pdb
+C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.csproj.AssemblyReference.cache
+C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.Form1.resources
+C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.Properties.Resources.resources
+C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.csproj.GenerateResource.cache
+C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.csproj.CoreCompileInputs.cache
+C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.exe
+C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.pdb
