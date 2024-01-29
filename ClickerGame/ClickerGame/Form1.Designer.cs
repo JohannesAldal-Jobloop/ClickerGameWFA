@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.ClickerButton = new System.Windows.Forms.Button();
             this.ClickerCounter = new System.Windows.Forms.Label();
             this.Upgrade1 = new System.Windows.Forms.Button();
@@ -48,6 +49,7 @@
             this.Upgrade16 = new System.Windows.Forms.Button();
             this.Upgrade11 = new System.Windows.Forms.Button();
             this.Upgrade10 = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // ClickerButton
@@ -273,6 +275,12 @@
             this.Upgrade10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Upgrade10.UseVisualStyleBackColor = true;
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -327,6 +335,7 @@
         private System.Windows.Forms.Button Upgrade16;
         private System.Windows.Forms.Button Upgrade11;
         private System.Windows.Forms.Button Upgrade10;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

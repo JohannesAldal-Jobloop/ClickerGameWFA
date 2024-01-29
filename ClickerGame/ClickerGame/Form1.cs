@@ -20,24 +20,14 @@ namespace ClickerGame
         int pointsPerClick = 1;
 
         int upgradePrice;
-        int autoPointsPerSecond;
+        int autoPointsPerSecond = 1;
+
+        bool isDone = false;
+        bool[] upgradesBought = new bool[18];
 
         public Form1()
         {
             InitializeComponent();
-        }
-
-        // Aoutomaticly increases points by pointsPerSecond per second.
-        public void AutoPoints( int pointsPerSecond)
-        {
-            for (int i = 0; i < 10; i++)
-            {
-                Debug.WriteLine("loop");
-                points += pointsPerSecond;
-                ClickerCounter.Text = points.ToString();
-                Thread.Sleep(1000);
-            }
-            
         }
 
         // Increases the points by pointsPerClick and displayes
@@ -57,7 +47,8 @@ namespace ClickerGame
             {
                 points -= upgradePrice;
                 ClickerCounter.Text = points.ToString();
-                AutoPoints(1);
+                upgradesBought[0] = true;
+                Upgrade1.Text = "";
                 Upgrade1.Enabled = false;
             }
         }
@@ -71,6 +62,7 @@ namespace ClickerGame
                 points -= upgradePrice;
                 ClickerCounter.Text = points.ToString();
                 pointsPerClick *= 2;
+                upgradesBought[1] = true;
                 Upgrade2.Enabled = false;
             }
         }
@@ -84,7 +76,27 @@ namespace ClickerGame
                 points -= upgradePrice;
                 ClickerCounter.Text = points.ToString();
                 pointsPerClick *= 3;
+                upgradesBought[2] = true;
                 Upgrade3.Enabled = false;
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (upgradesBought[0])
+            {
+                points += autoPointsPerSecond;
+                ClickerCounter.Text = points.ToString();
+
+
+                if (Upgrade1.Text != ".....")
+                {
+                    Upgrade1.Text += ".";
+                }
+                else
+                {
+                    Upgrade1.Text = "";
+                }
             }
         }
     }
