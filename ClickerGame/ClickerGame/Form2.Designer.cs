@@ -88,6 +88,7 @@
             // 
             this.button1.BackColor = System.Drawing.Color.SeaGreen;
             this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Goldenrod;
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Goldenrod;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(3, 3);
             this.button1.Name = "button1";
@@ -119,7 +120,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(194, 85);
             this.button3.TabIndex = 2;
-            this.button3.Text = "button3";
+            this.button3.Text = "Snake";
             this.button3.UseVisualStyleBackColor = false;
             // 
             // button4
@@ -131,7 +132,7 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(194, 85);
             this.button4.TabIndex = 3;
-            this.button4.Text = "button4";
+            this.button4.Text = "Tetris";
             this.button4.UseVisualStyleBackColor = false;
             // 
             // button5
@@ -143,7 +144,7 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(194, 85);
             this.button5.TabIndex = 4;
-            this.button5.Text = "button5";
+            this.button5.Text = "Pong";
             this.button5.UseVisualStyleBackColor = false;
             // 
             // button6
@@ -155,7 +156,7 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(194, 85);
             this.button6.TabIndex = 5;
-            this.button6.Text = "button6";
+            this.button6.Text = "Rythm Game";
             this.button6.UseVisualStyleBackColor = false;
             // 
             // button7
