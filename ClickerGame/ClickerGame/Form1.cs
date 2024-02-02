@@ -30,7 +30,7 @@ namespace ClickerGame
             InitializeComponent();
         }
 
-        public void SimpleActiveAnimation( Button button)
+        public void SimpleActiveAnimation(Button button)
         {
             // Må endra tallet i Upgrade1 til den knappen som du vill skal ha animasjonen
             button.Font = new Font("Arial", 20, FontStyle.Bold);
@@ -61,8 +61,11 @@ namespace ClickerGame
 
                 SimpleActiveAnimation(Upgrade1);
             }
-            if (upgradesBought[3])
+            if (upgradesBought[3] )
             {
+                points += autoPointsPerSecond;
+                ClickerCounter.Text = points.ToString();
+
                 SimpleActiveAnimation(Upgrade4);
             }
         }
