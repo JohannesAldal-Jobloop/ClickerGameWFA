@@ -9,3 +9,4 @@ C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\Cli
 C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.exe
 C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.pdb
 C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.Form2.resources
+C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.Form3.resources

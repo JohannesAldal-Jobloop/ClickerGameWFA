@@ -16,6 +16,7 @@ namespace ClickerGame
         //public [] gameArray = {Form1};
 
         public Form1 game1 = new Form1();
+        public Form3 game2 = new Form3();
         public Form2()
         {
             InitializeComponent();
@@ -26,6 +27,13 @@ namespace ClickerGame
             // Changes form to the clicker game.
             // (Form2 -> Form1)
             game1.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Changes form to the memory game.
+            // (Form2 -> Form3)
+            game2.ShowDialog();
         }
     }
 }
