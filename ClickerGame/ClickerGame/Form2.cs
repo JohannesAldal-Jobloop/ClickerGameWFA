@@ -17,7 +17,7 @@ namespace ClickerGame
 
         public Form1 game1 = new Form1();
         public Form3 game2 = new Form3();
-        //public Form4 game3 = new Form4();
+        public Form4 game3 = new Form4();
         public Form2()
         {
             InitializeComponent();
@@ -39,7 +39,9 @@ namespace ClickerGame
 
         private void button3_Click(object sender, EventArgs e)
         {
-
+            // Changes form to the memory game.
+            // (Form2 -> Form4)
+            game3.ShowDialog();
         }
     }
 }
