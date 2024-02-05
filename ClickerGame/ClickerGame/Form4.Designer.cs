@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.snakeGrid = new System.Windows.Forms.TableLayoutPanel();
             this.apple = new System.Windows.Forms.FlowLayoutPanel();
             this.snake = new System.Windows.Forms.FlowLayoutPanel();
+            this.autoMovementTimer = new System.Windows.Forms.Timer(this.components);
             this.snakeGrid.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,6 +84,11 @@
             this.snake.Size = new System.Drawing.Size(62, 59);
             this.snake.TabIndex = 1;
             // 
+            // autoMovementTimer
+            // 
+            this.autoMovementTimer.Interval = 750;
+            this.autoMovementTimer.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -103,5 +110,6 @@
         private System.Windows.Forms.TableLayoutPanel snakeGrid;
         private System.Windows.Forms.FlowLayoutPanel apple;
         private System.Windows.Forms.FlowLayoutPanel snake;
+        private System.Windows.Forms.Timer autoMovementTimer;
     }
 }
