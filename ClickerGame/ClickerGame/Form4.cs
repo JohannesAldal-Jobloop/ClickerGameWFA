@@ -73,17 +73,8 @@ namespace ClickerGame
             PlaceControl(apple, randomCol, randomRow);
         }
 
-        
-        private void Form4_KeyDown(object sender, KeyEventArgs e)
+        private void WSDATestMovement(KeyEventArgs e)
         {
-            //---------- Snake WSDA movement----------
-            // This is for testing purposes,
-            // the final product will have automatic movement with direction change.
-
-            // Checks if the user presses W, S, D or A.
-            // Then moves the snake control one column or row up or down
-            // depending on what key is pressed.
-
             int row = snakeGrid.GetRow(snake);
             int col = snakeGrid.GetColumn(snake);
 
@@ -101,7 +92,7 @@ namespace ClickerGame
 
                 PlaceControl(snake, row, col);
             }
-            else if(e.KeyCode == Keys.S)
+            else if (e.KeyCode == Keys.S)
             {
                 row++;
 
@@ -112,13 +103,13 @@ namespace ClickerGame
 
                 PlaceControl(snake, row, col);
             }
-            else if(e.KeyCode == Keys.D)
+            else if (e.KeyCode == Keys.D)
             {
                 col++;
 
                 // Checks if the col variable is valid.
                 // If not returns to hinder a crash.
-                if (col >= snakeGrid.RowCount)
+                if (col >= snakeGrid.ColumnCount)
                     return;
 
                 // Checks if the row its trying to move to has the apple.
@@ -126,7 +117,7 @@ namespace ClickerGame
 
                 PlaceControl(snake, row, col);
             }
-            else if(e.KeyCode == Keys.A)
+            else if (e.KeyCode == Keys.A)
             {
                 col--;
 
@@ -140,6 +131,19 @@ namespace ClickerGame
 
                 PlaceControl(snake, row, col);
             }
+        }
+        
+        private void Form4_KeyDown(object sender, KeyEventArgs e)
+        {
+            //---------- Snake WSDA movement----------
+            // This is for testing purposes,
+            // the final product will have automatic movement with direction change.
+
+            // Checks if the user presses W, S, D or A.
+            // Then moves the snake control one column or row up or down
+            // depending on what key is pressed.
+
+            //WSDATestMovement(e);
             //----------------------------------------
 
             //----------- Snake WSDA direction change ----------
@@ -170,20 +174,65 @@ namespace ClickerGame
 
             if (autoMoveDirection == "up")
             {
-                Console.Write("up");
-                PlaceControl(snake, (row + 1), col);
+                row--;
+
+                // Checks if the row variable is valid.
+                // If not returns to hinder a crash.
+                if (row == -1)
+                {
+                    MessageBox.Show("You lost 😒", "Sorry");
+                    autoMovementTimer.Stop();
+                    return;
+                    
+                }
+                    
+
+                // Checks if the row its trying to move to has the apple.
+                CheckForApple(row, col);
+
+                PlaceControl(snake, row, col);
             }
             else if (autoMoveDirection == "down")
             {
+                row++;
 
+                // Checks if the row variable is valid.
+                // If not returns to hinder a crash.
+                if (row >= snakeGrid.RowCount)
+                    return;
+
+                // Checks if the row its trying to move to has the apple.
+                CheckForApple(row, col);
+
+                PlaceControl(snake, row, col);
             }
             else if (autoMoveDirection == "right")
             {
+                col++;
 
+                // Checks if the row variable is valid.
+                // If not returns to hinder a crash.
+                if (col >= snakeGrid.ColumnCount)
+                    return;
+
+                // Checks if the row its trying to move to has the apple.
+                CheckForApple(row, col);
+
+                PlaceControl(snake, row, col);
             }
             else if (autoMoveDirection == "left")
             {
+                col--;
 
+                // Checks if the row variable is valid.
+                // If not returns to hinder a crash.
+                if (col == -1)
+                    return;
+
+                // Checks if the row its trying to move to has the apple.
+                CheckForApple(row, col);
+
+                PlaceControl(snake, row, col);
             }
         }
     }
