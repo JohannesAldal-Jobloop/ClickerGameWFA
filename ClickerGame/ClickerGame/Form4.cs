@@ -19,6 +19,8 @@ namespace ClickerGame
         public int gridMaxPosition;
         public string autoMoveDirection;
 
+        public bool gameOverShown = false;
+
         public Form4()
         {
             InitializeComponent();
@@ -61,9 +63,38 @@ namespace ClickerGame
             {
                 RandomRowCol();
                 snakeGrid.Controls.Remove(apple);
+
+                FlowLayoutPanel newSnakePice = new FlowLayoutPanel();
+                newSnakePice.BackColor = Color.LimeGreen;
+
                 PlaceControl(apple, randomRow, randomCol);
                 PlaceControl(snake, appleRow, appleCol);
+                PlaceControl(newSnakePice,0,0);
             }
+        }
+
+        private void CheckForSnake(int row, int col)
+        {
+            // Checks if the row its trying to move to has the apple.
+            // If true changes the apple for another snake pice.
+            int snakeRow = snakeGrid.GetRow(snake);
+            int snakeCol = snakeGrid.GetColumn(snake);
+
+            if (row == snakeRow && col == snakeCol)
+            {
+                GameOverMessage();
+            }
+        }
+
+        private void GameOverMessage()
+        {
+            if (!gameOverShown)
+            {
+                MessageBox.Show("Game Over", "Game Over");
+                autoMovementTimer.Stop();
+                gameOverShown = true;
+            }
+            
         }
 
         private void Form4_Activated(object sender, EventArgs e)
@@ -180,11 +211,16 @@ namespace ClickerGame
                 // If not returns to hinder a crash.
                 if (row == -1)
                 {
-                    MessageBox.Show("You lost 😒", "Sorry");
+                    //GameOverMessage();
                     autoMovementTimer.Stop();
                     return;
-                    
                 }
+                    
+
+
+                // Checks if there is a snake in the row its trying to move to.
+                // Game Over if true.
+                //CheckForSnake(row, col);
                     
 
                 // Checks if the row its trying to move to has the apple.
@@ -199,7 +235,11 @@ namespace ClickerGame
                 // Checks if the row variable is valid.
                 // If not returns to hinder a crash.
                 if (row >= snakeGrid.RowCount)
+                {
+                    //GameOverMessage();
+                    autoMovementTimer.Stop();
                     return;
+                }
 
                 // Checks if the row its trying to move to has the apple.
                 CheckForApple(row, col);
@@ -213,7 +253,11 @@ namespace ClickerGame
                 // Checks if the row variable is valid.
                 // If not returns to hinder a crash.
                 if (col >= snakeGrid.ColumnCount)
+                {
+                    //GameOverMessage();
+                    autoMovementTimer.Stop();
                     return;
+                }
 
                 // Checks if the row its trying to move to has the apple.
                 CheckForApple(row, col);
@@ -227,7 +271,11 @@ namespace ClickerGame
                 // Checks if the row variable is valid.
                 // If not returns to hinder a crash.
                 if (col == -1)
+                {
+                    //GameOverMessage();
+                    autoMovementTimer.Stop();
                     return;
+                }
 
                 // Checks if the row its trying to move to has the apple.
                 CheckForApple(row, col);
