@@ -21,10 +21,15 @@ namespace ClickerGame
 
         public bool gameOverShown = false;
 
+        private List<FlowLayoutPanel> snakePices = new List<FlowLayoutPanel>();
+        private List<int> snakeMovesLoggRow = new List<int>();
+        private List<int> snakeMovesLoggCol = new List<int>();
+
         public Form4()
         {
             InitializeComponent();
             autoMovementTimer.Start();
+            snakePices.Add(snake);
         }
 
         // Places the apple in a random cell in the snakeGridd
@@ -66,6 +71,7 @@ namespace ClickerGame
 
                 FlowLayoutPanel newSnakePice = new FlowLayoutPanel();
                 newSnakePice.BackColor = Color.LimeGreen;
+                snakePices.Add(newSnakePice);
 
                 PlaceControl(apple, randomRow, randomCol);
                 PlaceControl(snake, appleRow, appleCol);
@@ -203,6 +209,9 @@ namespace ClickerGame
             int row = snakeGrid.GetRow(snake);
             int col = snakeGrid.GetColumn(snake);
 
+            int previousRow = row;
+            int previousCol = col;
+
             if (autoMoveDirection == "up")
             {
                 row--;
@@ -226,6 +235,13 @@ namespace ClickerGame
                 // Checks if the row its trying to move to has the apple.
                 CheckForApple(row, col);
 
+                if(snakePices.Count > 1)
+                {
+                    snakeMovesLoggRow.Prepend(previousRow);
+                    snakeMovesLoggCol.Prepend(previousCol);
+                    Console.WriteLine(snakeMovesLoggRow[0]); // Problem with index outside of array.
+                    Console.Write(snakeMovesLoggCol[0]);
+                }
                 PlaceControl(snake, row, col);
             }
             else if (autoMoveDirection == "down")
