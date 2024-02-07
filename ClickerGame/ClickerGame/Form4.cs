@@ -103,6 +103,26 @@ namespace ClickerGame
             
         }
 
+        private void LoggPreviuosMoves(int preRow, int preCol)
+        {
+            if (snakePices.Count > 1)
+            {
+                if(snakeMovesLoggCol.Count == 0 && snakeMovesLoggRow.Count == 0)
+                {
+                    snakeMovesLoggRow.Add(preRow);
+                    snakeMovesLoggCol.Add(preCol);
+                    Console.WriteLine(snakeMovesLoggRow.First() + ", " + snakeMovesLoggCol.First() + ": " + snakeMovesLoggCol.Count);
+                }
+                else
+                {
+                    snakeMovesLoggRow.Insert(0, preRow);
+                    snakeMovesLoggCol.Insert(0, preCol);
+                    Console.WriteLine(snakeMovesLoggRow.First() + ", " + snakeMovesLoggCol.First() + ": " + snakeMovesLoggCol.Count);
+                }
+                
+            }
+        }
+
         private void Form4_Activated(object sender, EventArgs e)
         {
             autoMoveDirection = "up";
@@ -235,13 +255,8 @@ namespace ClickerGame
                 // Checks if the row its trying to move to has the apple.
                 CheckForApple(row, col);
 
-                if(snakePices.Count > 1)
-                {
-                    snakeMovesLoggRow.Prepend(previousRow);
-                    snakeMovesLoggCol.Prepend(previousCol);
-                    Console.WriteLine(snakeMovesLoggRow[0]); // Problem with index outside of array.
-                    Console.Write(snakeMovesLoggCol[0]);
-                }
+                LoggPreviuosMoves(previousRow, previousCol);
+                
                 PlaceControl(snake, row, col);
             }
             else if (autoMoveDirection == "down")
@@ -259,6 +274,8 @@ namespace ClickerGame
 
                 // Checks if the row its trying to move to has the apple.
                 CheckForApple(row, col);
+
+                LoggPreviuosMoves(previousRow, previousCol);
 
                 PlaceControl(snake, row, col);
             }
@@ -278,6 +295,8 @@ namespace ClickerGame
                 // Checks if the row its trying to move to has the apple.
                 CheckForApple(row, col);
 
+                LoggPreviuosMoves(previousRow, previousCol);
+
                 PlaceControl(snake, row, col);
             }
             else if (autoMoveDirection == "left")
@@ -295,6 +314,8 @@ namespace ClickerGame
 
                 // Checks if the row its trying to move to has the apple.
                 CheckForApple(row, col);
+
+                LoggPreviuosMoves(previousRow, previousCol);
 
                 PlaceControl(snake, row, col);
             }
