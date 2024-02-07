@@ -29,17 +29,17 @@ namespace ClickerGame
         {
             InitializeComponent();
             autoMovementTimer.Start();
-            snakePices.Add(snake);
+            //snakePices.Add(snake);
         }
 
         // Places the apple in a random cell in the snakeGridd
         // Controls is a class with the controls for the design
         private void PlaceControl(Control control, int row, int col)
         {
-            // Remove the apple from its current position
+            // Remove the control from its current position
             snakeGrid.Controls.Remove(control);
 
-            // Insert the apple at the new position
+            // Insert the control at the new position
             snakeGrid.Controls.Add(control, col, row);
         }
 
@@ -103,7 +103,7 @@ namespace ClickerGame
             
         }
 
-        private void LoggPreviuosMoves(int preRow, int preCol)
+        private void LoggPreviousMoves(int preRow, int preCol)
         {
             if (snakePices.Count > 1)
             {
@@ -111,16 +111,38 @@ namespace ClickerGame
                 {
                     snakeMovesLoggRow.Add(preRow);
                     snakeMovesLoggCol.Add(preCol);
-                    Console.WriteLine(snakeMovesLoggRow.First() + ", " + snakeMovesLoggCol.First() + ": " + snakeMovesLoggCol.Count);
                 }
                 else
                 {
                     snakeMovesLoggRow.Insert(0, preRow);
                     snakeMovesLoggCol.Insert(0, preCol);
-                    Console.WriteLine(snakeMovesLoggRow.First() + ", " + snakeMovesLoggCol.First() + ": " + snakeMovesLoggCol.Count);
                 }
                 
             }
+        }
+
+        private void MoveSnakebody()
+        {
+            for(int i = 0; i < snakePices.Count; i++)
+            {
+                PlaceControl(snakePices[i], snakeMovesLoggRow[i], snakeMovesLoggCol[i]); // index ouside of array
+            }
+        }
+
+        private void MovementChecks(int row, int col, int previousRow, int previousCol)
+        {
+            CheckForApple(row, col);
+
+            LoggPreviousMoves(previousRow, previousCol);
+
+            if(snakePices.Count != 0)
+            {
+                MoveSnakebody();
+            }
+
+            CheckForSnake(row, col);
+
+            PlaceControl(snake, row, col);
         }
 
         private void Form4_Activated(object sender, EventArgs e)
@@ -244,20 +266,12 @@ namespace ClickerGame
                     autoMovementTimer.Stop();
                     return;
                 }
-                    
-
 
                 // Checks if there is a snake in the row its trying to move to.
                 // Game Over if true.
-                //CheckForSnake(row, col);
-                    
-
                 // Checks if the row its trying to move to has the apple.
-                CheckForApple(row, col);
-
-                LoggPreviuosMoves(previousRow, previousCol);
-                
-                PlaceControl(snake, row, col);
+                // Moves snake body if there are any pices.
+                MovementChecks(row, col, previousRow, previousCol);
             }
             else if (autoMoveDirection == "down")
             {
@@ -272,12 +286,11 @@ namespace ClickerGame
                     return;
                 }
 
+                // Checks if there is a snake in the row its trying to move to.
+                // Game Over if true.
                 // Checks if the row its trying to move to has the apple.
-                CheckForApple(row, col);
-
-                LoggPreviuosMoves(previousRow, previousCol);
-
-                PlaceControl(snake, row, col);
+                // Moves snake body if there are any pices.
+                MovementChecks(row, col, previousRow, previousCol);
             }
             else if (autoMoveDirection == "right")
             {
@@ -292,12 +305,11 @@ namespace ClickerGame
                     return;
                 }
 
+                // Checks if there is a snake in the row its trying to move to.
+                // Game Over if true.
                 // Checks if the row its trying to move to has the apple.
-                CheckForApple(row, col);
-
-                LoggPreviuosMoves(previousRow, previousCol);
-
-                PlaceControl(snake, row, col);
+                // Moves snake body if there are any pices.
+                MovementChecks(row, col, previousRow, previousCol);
             }
             else if (autoMoveDirection == "left")
             {
@@ -312,12 +324,11 @@ namespace ClickerGame
                     return;
                 }
 
+                // Checks if there is a snake in the row its trying to move to.
+                // Game Over if true.
                 // Checks if the row its trying to move to has the apple.
-                CheckForApple(row, col);
-
-                LoggPreviuosMoves(previousRow, previousCol);
-
-                PlaceControl(snake, row, col);
+                // Moves snake body if there are any pices.
+                MovementChecks(row, col, previousRow, previousCol);
             }
         }
     }
