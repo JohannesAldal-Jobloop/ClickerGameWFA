@@ -58,7 +58,7 @@ namespace ClickerGame
                 appleFound = false;
 
                 PlaceControl(snakeHead, appleRow, appleCol);
-                PlaceControl(newSnakeBodyPice, 0, 0);
+                PlaceControl(newSnakeBodyPice, snakeMovesLoggRow[0], snakeMovesLoggCol[0]);
             }
             else
             {
@@ -75,9 +75,11 @@ namespace ClickerGame
             int snakeRow = snakeGrid.GetRow(snakeHead);
             int snakeCol = snakeGrid.GetColumn(snakeHead);
 
-            for (int i = 0; i < snakeMovesLoggRow.Count; i++)
+            int snakebodycount = snakeBodyPices.Count;
+
+            for (int i = 0; i < snakeBodyPices.Count; i++)
             {
-                if (snakeMovesLoggRow[i] == snakeRow && snakeMovesLoggCol[i] == snakeCol)
+                if (snakeMovesLoggRow[i] == row && snakeMovesLoggCol[i] == col)
                 {
                     snakeFound = true;
                 }
@@ -102,8 +104,8 @@ namespace ClickerGame
         {
             // Checks for an apple or a snake pice
             // in the cell it wants to move to
-            CheckForApple(row, col);
             CheckForSnake(row, col);
+            CheckForApple(row, col);
 
             if (snakeFound)
             {
@@ -140,14 +142,19 @@ namespace ClickerGame
             snakeGrid.Controls.Add(control, col, row);
         }
 
+
+        // Loggs the previous posistion to snakeHead when it moves.
         private void LoggPreviousMoves(int preRow, int preCol)
         {
+            // If snakeMovesLoggCol and snakeMovesLoggRow's count is 0
+            // add the previous row and col into them since its the first move.
             if (snakeMovesLoggCol.Count == 0 && snakeMovesLoggRow.Count == 0)
             {
                 snakeMovesLoggRow.Add(preRow);
                 snakeMovesLoggCol.Add(preCol);
             }
-            else
+            else // Inserts the previous rom and col in the beginning of
+                 // snakeMovesLoggCol and snakeMovesLoggRow.
             {
                 snakeMovesLoggRow.Insert(0, preRow);
                 snakeMovesLoggCol.Insert(0, preCol);
@@ -223,7 +230,7 @@ namespace ClickerGame
 
                 MovementChecks(row, col, previousRow, previousCol);
             }
-        }
+        } // Testing only
 
         private void AutoMovement(int row, int col, int previousRow, int previousCol)
         {
@@ -332,8 +339,10 @@ namespace ClickerGame
             if (!gameOverShown)
             {
                 MessageBox.Show("Game Over", "Game Over");
-                autoMovementTimer.Stop();
                 gameOverShown = true;
+            } else if (gameOverShown)
+            {
+                return;
             }
             
         }
@@ -355,28 +364,28 @@ namespace ClickerGame
             // Then moves the snake control one column or row up or down
             // depending on what key is pressed.
 
-            WSDATestMovement(e);
+            //WSDATestMovement(e);
             //----------------------------------------
 
             //----------- Snake WSDA direction change ----------
             // checks for WSDA input and changes its move direction acordingly
 
-            //if (e.KeyCode == Keys.W && autoMoveDirection != "down")
-            //{
-            //    autoMoveDirection = "up";
-            //}
-            //else if (e.KeyCode == Keys.S && autoMoveDirection != "up")
-            //{
-            //    autoMoveDirection = "down";
-            //}
-            //else if (e.KeyCode == Keys.D)
-            //{
-            //    autoMoveDirection = "right";
-            //}
-            //else if (e.KeyCode == Keys.A)
-            //{
-            //    autoMoveDirection = "left";
-            //}
+            if (e.KeyCode == Keys.W && autoMoveDirection != "down")
+            {
+                autoMoveDirection = "up";
+            }
+            else if (e.KeyCode == Keys.S && autoMoveDirection != "up")
+            {
+                autoMoveDirection = "down";
+            }
+            else if (e.KeyCode == Keys.D && autoMoveDirection != "left")
+            {
+                autoMoveDirection = "right";
+            }
+            else if (e.KeyCode == Keys.A && autoMoveDirection != "right")
+            {
+                autoMoveDirection = "left";
+            }
             //--------------------------------------------------
 
         }
@@ -389,7 +398,7 @@ namespace ClickerGame
             int previousRow = row;
             int previousCol = col;
 
-            //AutoMovement(row, col, previousRow, previousCol);
+            AutoMovement(row, col, previousRow, previousCol);
         }
     }
 }
