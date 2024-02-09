@@ -31,7 +31,11 @@ namespace ClickerGame
         public Form4()
         {
             InitializeComponent();
-            autoMovementTimer.Start();
+
+            gridMaxPosition = snakeGrid.ColumnCount;
+
+            
+            
         }
 
         // ---------- MOVEMENT CHECKS ----------
@@ -318,12 +322,12 @@ namespace ClickerGame
 
 
 
-
+        // setts randomCol and randomRow to two random intesgers
         private void RandomRowCol()
         {
             Random random = new Random();
-            randomCol = random.Next(gridMinPosition, 10);
-            randomRow = random.Next(gridMinPosition, 10);
+            randomCol = random.Next(gridMinPosition, gridMaxPosition);
+            randomRow = random.Next(gridMinPosition, gridMaxPosition);
 
             // Checks if the random position is teh same as the snakes posistion.
             // If true randomise again.
@@ -349,9 +353,20 @@ namespace ClickerGame
 
         private void Form4_Activated(object sender, EventArgs e)
         {
-            autoMoveDirection = "up";
-            RandomRowCol();
-            PlaceControl(apple, randomCol, randomRow);
+            
+
+            if (snakeGrid.RowCount == snakeGrid.ColumnCount)
+            {
+                autoMovementTimer.Start();
+                autoMoveDirection = "up";
+                RandomRowCol();
+                PlaceControl(apple, randomCol, randomRow);
+            }
+            else
+            {
+                MessageBox.Show("Grid is not symetrical!", "ERROR");
+                Close();
+            }
         }
         
         private void Form4_KeyDown(object sender, KeyEventArgs e)

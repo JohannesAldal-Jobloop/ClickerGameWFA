@@ -49,6 +49,7 @@
             this.snakeGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.snakeGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.snakeGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.snakeGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.snakeGrid.Controls.Add(this.apple, 0, 0);
             this.snakeGrid.Controls.Add(this.snakeHead, 6, 4);
             this.snakeGrid.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -71,6 +72,7 @@
             // apple
             // 
             this.apple.BackColor = System.Drawing.Color.Red;
+            this.apple.Dock = System.Windows.Forms.DockStyle.Fill;
             this.apple.Location = new System.Drawing.Point(3, 3);
             this.apple.Name = "apple";
             this.apple.Size = new System.Drawing.Size(62, 59);
