@@ -20,8 +20,10 @@ namespace ClickerGame
         public string autoMoveDirection;
 
         public bool gameOverShown = false;
+        public bool appleFound = false;
+        public bool snakeFound = false;
 
-        private List<FlowLayoutPanel> snakePices = new List<FlowLayoutPanel>();
+        private List<FlowLayoutPanel> snakeBodyPices = new List<FlowLayoutPanel>();
         private List<int> snakeMovesLoggRow = new List<int>();
         private List<int> snakeMovesLoggCol = new List<int>();
 
@@ -31,6 +33,80 @@ namespace ClickerGame
             autoMovementTimer.Start();
             //snakePices.Add(snake);
         }
+
+        // ---------- MOVEMENT CHECKS ----------
+
+        private void CheckForApple(int row, int col)
+        {
+            // Checks if the row its trying to move to has the apple.
+            // If true changes the apple for another snake pice.
+            int appleRow = snakeGrid.GetRow(apple);
+            int appleCol = snakeGrid.GetColumn(apple);
+
+            if (row == appleRow && col == appleCol)
+            {
+                appleFound = true;
+
+                RandomRowCol();
+                snakeGrid.Controls.Remove(apple);
+
+                FlowLayoutPanel newSnakeBodyPice = new FlowLayoutPanel();
+                newSnakeBodyPice.BackColor = Color.LimeGreen;
+                snakeBodyPices.Add(newSnakeBodyPice);
+
+                PlaceControl(apple, randomRow, randomCol);
+                appleFound = false;
+
+                PlaceControl(snakeHead, appleRow, appleCol);
+                PlaceControl(newSnakeBodyPice, 0, 0);
+            }
+            else
+            {
+                appleFound = false;
+            }
+        }
+
+        private void CheckForSnake(int row, int col)
+        {
+            // Checks if the row its trying to move to has a snake pice.
+            // If true changes the apple for another snake pice.
+            int snakeRow = snakeGrid.GetRow(snakeHead);
+            int snakeCol = snakeGrid.GetColumn(snakeHead);
+
+            if (row == snakeRow && col == snakeCol)
+            {
+                snakeFound = true;
+            }
+            else
+            {
+                snakeFound = false;
+            }
+        }
+
+        // Collects all the nessesery checks for one move of the snake in one function.
+        private void MovementChecks(int row, int col, int previousRow, int previousCol)
+        {
+            // Checks for an apple or a snake pice
+            // in the cell it wants to move to
+            CheckForApple(row, col);
+            CheckForSnake(row, col);
+            // If none of the checks results in a game over logg the move.
+            LoggPreviousMoves(previousRow, previousCol);
+
+            // If the snakePices has elements inn it move the pices
+            if (snakeBodyPices.Count != 0)
+            {
+                MoveSnakebody();
+            }
+
+            PlaceControl(snakeHead, row, col);
+        }
+
+        //--------------------------------------
+
+
+
+        //---------- FUNCTIONS FOR MOVEMENT ----------
 
         // Places the apple in a random cell in the snakeGridd
         // Controls is a class with the controls for the design
@@ -43,119 +119,37 @@ namespace ClickerGame
             snakeGrid.Controls.Add(control, col, row);
         }
 
-        private void RandomRowCol()
-        {
-            Random random = new Random();
-            randomCol = random.Next(gridMinPosition, 10);
-            randomRow = random.Next(gridMinPosition, 10);
-
-            // Checks if the random position is teh same as the snakes posistion.
-            // If true randomise again.
-            if (randomCol == snakeGrid.GetColumn(snake) && randomRow == snakeGrid.GetRow(snake))
-            {
-                RandomRowCol();
-            }
-        }
-
-        private void CheckForApple(int row, int col)
-        {
-            // Checks if the row its trying to move to has the apple.
-            // If true changes the apple for another snake pice.
-            int appleRow = snakeGrid.GetRow(apple);
-            int appleCol = snakeGrid.GetColumn(apple);
-
-            if (row == appleRow && col == appleCol)
-            {
-                RandomRowCol();
-                snakeGrid.Controls.Remove(apple);
-
-                FlowLayoutPanel newSnakePice = new FlowLayoutPanel();
-                newSnakePice.BackColor = Color.LimeGreen;
-                snakePices.Add(newSnakePice);
-
-                PlaceControl(apple, randomRow, randomCol);
-                PlaceControl(snake, appleRow, appleCol);
-                PlaceControl(newSnakePice,0,0);
-            }
-        }
-
-        private void CheckForSnake(int row, int col)
-        {
-            // Checks if the row its trying to move to has the apple.
-            // If true changes the apple for another snake pice.
-            int snakeRow = snakeGrid.GetRow(snake);
-            int snakeCol = snakeGrid.GetColumn(snake);
-
-            if (row == snakeRow && col == snakeCol)
-            {
-                GameOverMessage();
-            }
-        }
-
-        private void GameOverMessage()
-        {
-            if (!gameOverShown)
-            {
-                MessageBox.Show("Game Over", "Game Over");
-                autoMovementTimer.Stop();
-                gameOverShown = true;
-            }
-            
-        }
-
         private void LoggPreviousMoves(int preRow, int preCol)
         {
-            if (snakePices.Count > 1)
+            if (snakeMovesLoggCol.Count == 0 && snakeMovesLoggRow.Count == 0)
             {
-                if(snakeMovesLoggCol.Count == 0 && snakeMovesLoggRow.Count == 0)
-                {
-                    snakeMovesLoggRow.Add(preRow);
-                    snakeMovesLoggCol.Add(preCol);
-                }
-                else
-                {
-                    snakeMovesLoggRow.Insert(0, preRow);
-                    snakeMovesLoggCol.Insert(0, preCol);
-                }
-                
+                snakeMovesLoggRow.Add(preRow);
+                snakeMovesLoggCol.Add(preCol);
+            }
+            else
+            {
+                snakeMovesLoggRow.Insert(0, preRow);
+                snakeMovesLoggCol.Insert(0, preCol);
             }
         }
 
+        // Moves the snakes body by moving each Control in snakePices with its
+        // matching posistion in the logged moves.
         private void MoveSnakebody()
         {
-            for(int i = 0; i < snakePices.Count; i++)
+            for (int i = 0; i < snakeBodyPices.Count; i++)
             {
-                PlaceControl(snakePices[i], snakeMovesLoggRow[i], snakeMovesLoggCol[i]); // index ouside of array
+                PlaceControl(snakeBodyPices[i], snakeMovesLoggRow[i], snakeMovesLoggCol[i]);
             }
-        }
-
-        private void MovementChecks(int row, int col, int previousRow, int previousCol)
-        {
-            CheckForApple(row, col);
-
-            LoggPreviousMoves(previousRow, previousCol);
-
-            if(snakePices.Count != 0)
-            {
-                MoveSnakebody();
-            }
-
-            CheckForSnake(row, col);
-
-            PlaceControl(snake, row, col);
-        }
-
-        private void Form4_Activated(object sender, EventArgs e)
-        {
-            autoMoveDirection = "up";
-            RandomRowCol();
-            PlaceControl(apple, randomCol, randomRow);
         }
 
         private void WSDATestMovement(KeyEventArgs e)
         {
-            int row = snakeGrid.GetRow(snake);
-            int col = snakeGrid.GetColumn(snake);
+            int row = snakeGrid.GetRow(snakeHead);
+            int col = snakeGrid.GetColumn(snakeHead);
+
+            int previousRow = row;
+            int previousCol = col;
 
             if (e.KeyCode == Keys.W)
             {
@@ -167,9 +161,7 @@ namespace ClickerGame
                     return;
 
                 // Checks if the row its trying to move to has the apple.
-                CheckForApple(row, col);
-
-                PlaceControl(snake, row, col);
+                MovementChecks(row, col, previousRow, previousCol);
             }
             else if (e.KeyCode == Keys.S)
             {
@@ -180,7 +172,7 @@ namespace ClickerGame
                 if (row >= snakeGrid.RowCount)
                     return;
 
-                PlaceControl(snake, row, col);
+                MovementChecks(row, col, previousRow, previousCol);
             }
             else if (e.KeyCode == Keys.D)
             {
@@ -194,7 +186,7 @@ namespace ClickerGame
                 // Checks if the row its trying to move to has the apple.
                 CheckForApple(row, col);
 
-                PlaceControl(snake, row, col);
+                MovementChecks(row, col, previousRow, previousCol);
             }
             else if (e.KeyCode == Keys.A)
             {
@@ -208,52 +200,12 @@ namespace ClickerGame
                 // Checks if the row its trying to move to has the apple.
                 CheckForApple(row, col);
 
-                PlaceControl(snake, row, col);
+                MovementChecks(row, col, previousRow, previousCol);
             }
         }
-        
-        private void Form4_KeyDown(object sender, KeyEventArgs e)
+
+        private void AutoMovement(int row, int col, int previousRow, int previousCol)
         {
-            //---------- Snake WSDA movement----------
-            // This is for testing purposes,
-            // the final product will have automatic movement with direction change.
-
-            // Checks if the user presses W, S, D or A.
-            // Then moves the snake control one column or row up or down
-            // depending on what key is pressed.
-
-            //WSDATestMovement(e);
-            //----------------------------------------
-
-            //----------- Snake WSDA direction change ----------
-            if(e.KeyCode == Keys.W)
-            {
-                autoMoveDirection = "up";
-            }
-            else if(e.KeyCode == Keys.S)
-            {
-                autoMoveDirection = "down";
-            }
-            else if (e.KeyCode == Keys.D)
-            {
-                autoMoveDirection = "right";
-            }
-            else if (e.KeyCode == Keys.A)
-            {
-                autoMoveDirection = "left";
-            }
-            //--------------------------------------------------
-
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            int row = snakeGrid.GetRow(snake);
-            int col = snakeGrid.GetColumn(snake);
-
-            int previousRow = row;
-            int previousCol = col;
-
             if (autoMoveDirection == "up")
             {
                 row--;
@@ -330,6 +282,93 @@ namespace ClickerGame
                 // Moves snake body if there are any pices.
                 MovementChecks(row, col, previousRow, previousCol);
             }
+
+        }
+
+        //--------------------------------------------
+
+
+
+
+
+        private void RandomRowCol()
+        {
+            Random random = new Random();
+            randomCol = random.Next(gridMinPosition, 10);
+            randomRow = random.Next(gridMinPosition, 10);
+
+            // Checks if the random position is teh same as the snakes posistion.
+            // If true randomise again.
+            CheckForSnake(randomRow, randomCol);
+            if (randomCol == snakeGrid.GetColumn(snakeHead) && randomRow == snakeGrid.GetRow(snakeHead) && snakeFound)
+            {
+                RandomRowCol();
+            }
+        }
+
+        private void GameOverMessage()
+        {
+            if (!gameOverShown)
+            {
+                MessageBox.Show("Game Over", "Game Over");
+                autoMovementTimer.Stop();
+                gameOverShown = true;
+            }
+            
+        }
+
+        private void Form4_Activated(object sender, EventArgs e)
+        {
+            autoMoveDirection = "up";
+            RandomRowCol();
+            PlaceControl(apple, randomCol, randomRow);
+        }
+        
+        private void Form4_KeyDown(object sender, KeyEventArgs e)
+        {
+            //---------- Snake WSDA movement----------
+            // This is for testing purposes,
+            // the final product will have automatic movement with direction change.
+
+            // Checks if the user presses W, S, D or A.
+            // Then moves the snake control one column or row up or down
+            // depending on what key is pressed.
+
+            WSDATestMovement(e);
+            //----------------------------------------
+
+            //----------- Snake WSDA direction change ----------
+            // checks for WSDA input and changes its move direction acordingly
+
+            //if (e.KeyCode == Keys.W && autoMoveDirection != "down")
+            //{
+            //    autoMoveDirection = "up";
+            //}
+            //else if (e.KeyCode == Keys.S && autoMoveDirection != "up")
+            //{
+            //    autoMoveDirection = "down";
+            //}
+            //else if (e.KeyCode == Keys.D)
+            //{
+            //    autoMoveDirection = "right";
+            //}
+            //else if (e.KeyCode == Keys.A)
+            //{
+            //    autoMoveDirection = "left";
+            //}
+            //--------------------------------------------------
+
+        }
+        
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            int row = snakeGrid.GetRow(snakeHead);
+            int col = snakeGrid.GetColumn(snakeHead);
+
+            int previousRow = row;
+            int previousCol = col;
+
+            //AutoMovement(row, col, previousRow, previousCol);
         }
     }
 }

@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.snakeGrid = new System.Windows.Forms.TableLayoutPanel();
             this.apple = new System.Windows.Forms.FlowLayoutPanel();
-            this.snake = new System.Windows.Forms.FlowLayoutPanel();
+            this.snakeHead = new System.Windows.Forms.FlowLayoutPanel();
             this.autoMovementTimer = new System.Windows.Forms.Timer(this.components);
             this.snakeGrid.SuspendLayout();
             this.SuspendLayout();
@@ -50,7 +50,7 @@
             this.snakeGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.snakeGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.snakeGrid.Controls.Add(this.apple, 0, 0);
-            this.snakeGrid.Controls.Add(this.snake, 6, 4);
+            this.snakeGrid.Controls.Add(this.snakeHead, 6, 4);
             this.snakeGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.snakeGrid.Location = new System.Drawing.Point(0, 0);
             this.snakeGrid.Name = "snakeGrid";
@@ -76,17 +76,18 @@
             this.apple.Size = new System.Drawing.Size(62, 59);
             this.apple.TabIndex = 0;
             // 
-            // snake
+            // snakeHead
             // 
-            this.snake.BackColor = System.Drawing.Color.LimeGreen;
-            this.snake.Location = new System.Drawing.Point(411, 263);
-            this.snake.Name = "snake";
-            this.snake.Size = new System.Drawing.Size(62, 59);
-            this.snake.TabIndex = 1;
+            this.snakeHead.BackColor = System.Drawing.Color.LimeGreen;
+            this.snakeHead.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.snakeHead.Location = new System.Drawing.Point(411, 263);
+            this.snakeHead.Name = "snakeHead";
+            this.snakeHead.Size = new System.Drawing.Size(62, 59);
+            this.snakeHead.TabIndex = 1;
             // 
             // autoMovementTimer
             // 
-            this.autoMovementTimer.Interval = 750;
+            this.autoMovementTimer.Interval = 500;
             this.autoMovementTimer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form4
@@ -109,7 +110,7 @@
 
         private System.Windows.Forms.TableLayoutPanel snakeGrid;
         private System.Windows.Forms.FlowLayoutPanel apple;
-        private System.Windows.Forms.FlowLayoutPanel snake;
+        private System.Windows.Forms.FlowLayoutPanel snakeHead;
         private System.Windows.Forms.Timer autoMovementTimer;
     }
 }
