@@ -8,11 +8,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ClickerGame
 {
     public partial class Form4 : Form
     {
+        //---------- Variebles for custom grid sise ---------
+        private int customGridSize = 20;
+        //---------------------------------------------------
+
         public int randomRow;
         public int randomCol;
         public int gridMinPosition = 0;
@@ -32,13 +37,22 @@ namespace ClickerGame
         {
             InitializeComponent();
 
+            //snakeGrid.RowCount = customGridSize;
+            //snakeGrid.ColumnCount = customGridSize;
+            //snakeGrid.ColumnStyles(SizeType.Absolute, true);
+
+            for (int i = 0; i < customGridSize; i++)
+            {
+
+            }
+
             gridMaxPosition = snakeGrid.ColumnCount;
 
             
             
         }
 
-        // ---------- MOVEMENT CHECKS ----------
+        //---------- MOVEMENT CHECKS ----------
 
         private void CheckForApple(int row, int col)
         {
@@ -129,7 +143,7 @@ namespace ClickerGame
             }
         }
 
-        //--------------------------------------
+        //-------------------------------------
 
 
 
