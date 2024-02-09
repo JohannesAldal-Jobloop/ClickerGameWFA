@@ -17,6 +17,7 @@ namespace ClickerGame
         public int randomCol;
         public int gridMinPosition = 0;
         public int gridMaxPosition;
+
         public string autoMoveDirection;
 
         public bool gameOverShown = false;
@@ -31,7 +32,6 @@ namespace ClickerGame
         {
             InitializeComponent();
             autoMovementTimer.Start();
-            //snakePices.Add(snake);
         }
 
         // ---------- MOVEMENT CHECKS ----------
@@ -66,12 +66,26 @@ namespace ClickerGame
             }
         }
 
+        // Checks the next cell the snakeHead wants to,
+        // if there is a snakeBodyPice there or the snakeHead
         private void CheckForSnake(int row, int col)
         {
             // Checks if the row its trying to move to has a snake pice.
             // If true changes the apple for another snake pice.
             int snakeRow = snakeGrid.GetRow(snakeHead);
             int snakeCol = snakeGrid.GetColumn(snakeHead);
+
+            for (int i = 0; i < snakeMovesLoggRow.Count; i++)
+            {
+                if (snakeMovesLoggRow[i] == snakeRow && snakeMovesLoggCol[i] == snakeCol)
+                {
+                    snakeFound = true;
+                }
+                else
+                {
+                    snakeFound = false;
+                }
+            }
 
             if (row == snakeRow && col == snakeCol)
             {
@@ -90,16 +104,23 @@ namespace ClickerGame
             // in the cell it wants to move to
             CheckForApple(row, col);
             CheckForSnake(row, col);
+
+            if (snakeFound)
+            {
+                GameOverMessage();
+            }
+
             // If none of the checks results in a game over logg the move.
             LoggPreviousMoves(previousRow, previousCol);
 
-            // If the snakePices has elements inn it move the pices
+            // Moves the snakeHead
+            PlaceControl(snakeHead, row, col);
+
+            // If the snakeBodyPices has elements inn it move the pices
             if (snakeBodyPices.Count != 0)
             {
                 MoveSnakebody();
             }
-
-            PlaceControl(snakeHead, row, col);
         }
 
         //--------------------------------------
