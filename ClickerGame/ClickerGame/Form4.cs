@@ -39,14 +39,16 @@ namespace ClickerGame
         {
             InitializeComponent();
 
+            //---------- Attemt at custom grid size ----------
             //snakeGrid.RowCount = customGridSize;
             //snakeGrid.ColumnCount = customGridSize;
             //snakeGrid.ColumnStyles(SizeType.Absolute, true);
 
-            for (int i = 0; i < customGridSize; i++)
-            {
+            //for (int i = 0; i < customGridSize; i++)
+            //{
 
-            }
+            //}
+            //------------------------------------------------
 
             gridMaxPosition = snakeGrid.ColumnCount;
 
@@ -68,16 +70,22 @@ namespace ClickerGame
             {
                 appleFound = true;
 
+                // Finds a random new position for the apple.
                 RandomRowCol();
+
+                // Removes the apple from its current posistion.
                 snakeGrid.Controls.Remove(apple);
 
+                // Creates a new snakeBodyPice and.
                 FlowLayoutPanel newSnakeBodyPice = new FlowLayoutPanel();
                 newSnakeBodyPice.BackColor = Color.LimeGreen;
                 snakeBodyPices.Add(newSnakeBodyPice);
 
+                // Moves the apple to its new random posistion.
                 PlaceControl(apple, randomRow, randomCol);
                 appleFound = false;
 
+                // Moves the snakeHead and the newSnakeBodyPice to their new posistions.
                 PlaceControl(snakeHead, appleRow, appleCol);
                 PlaceControl(newSnakeBodyPice, snakeMovesLoggRow[0], snakeMovesLoggCol[0]);
             }
@@ -91,15 +99,9 @@ namespace ClickerGame
         // if there is a snakeBodyPice snakeFound = true
         private void CheckForSnake(int row, int col)
         {
-            // Checks if the row its trying to move to has a snake pice.
-            // If true changes the apple for another snake pice.
-            //int snakeRow = snakeGrid.GetRow(snakeHead);
-            //int snakeCol = snakeGrid.GetColumn(snakeHead);
-
-            //int snakebodycount = snakeBodyPices.Count;
-
-            //snakeFound = true;
-
+            // Checks if each snakeBodyPice's posistion
+            // matches the posistion the snakeHead wants to move to.
+            // If true, set snakeFound to true
             foreach(FlowLayoutPanel snakeBody in snakeBodyPices)
             {
                 int snakeBodyRow = snakeGrid.GetRow(snakeBody);
@@ -110,27 +112,6 @@ namespace ClickerGame
                     snakeFound = true;
                 }
             }
-
-            //for (int i = 0; i < snakeBodyPices.Count; i++)
-            //{
-            //    //if (snakeMovesLoggRow[i] == row && snakeMovesLoggCol[i] == col)
-            //    //{
-            //    //    snakeFound = true;
-            //    //}
-            //    //else
-            //    //{
-            //    //    snakeFound = false;
-            //    }
-            //}
-
-            //if (row == snakeRow && col == snakeCol)
-            //{
-            //    snakeFound = true;
-            //}
-            //else
-            //{
-            //    snakeFound = false;
-            //}
         }
 
         // Collects all the nessesery checks for one move of the snake in one function.
@@ -143,15 +124,17 @@ namespace ClickerGame
                 CheckForSnake(row, col);
             }
                 
+            // If snakeFound is true stop the autoMovementTimer
+            // and show game over message.
             if (snakeFound)
             {
                 autoMovementTimer.Stop();
                 GameOverMessage(hitSnakeGameOverMessage);
             }
 
+            // Checks if the posistion the snakeHead wants to move to has an apple.
+            // If true delets the apple and spwans a new snakeBodyPice.
             CheckForApple(row, col);
-
-            
 
             // If none of the checks results in a game over logg the move.
             LoggPreviousMoves(previousRow, previousCol);
@@ -212,6 +195,7 @@ namespace ClickerGame
             }
         }
 
+        // Testing only
         private void WSDATestMovement(KeyEventArgs e)
         {
             int row = snakeGrid.GetRow(snakeHead);
@@ -273,8 +257,11 @@ namespace ClickerGame
             }
         } // Testing only
 
+        // Fuckction that handles everything with auto movement.
         private void AutoMovement(int row, int col, int previousRow, int previousCol)
         {
+            // Checks what autoMoveDirection is and
+            // tryes to move the snakeHead that direction.
             if (autoMoveDirection == "up")
             {
                 row--;
@@ -364,7 +351,7 @@ namespace ClickerGame
 
 
 
-        // Setts randomCol and randomRow to two random intesgers
+        // Setts randomCol and randomRow to two random integers
         private void RandomRowCol()
         {
             Random random = new Random();
@@ -380,17 +367,10 @@ namespace ClickerGame
             }
         }
 
+        // Shows a game over message with the text gameOverMessage to the user.
         private void GameOverMessage(string gameOverMessage)
         {
-            if (!gameOverShown)
-            {
-                MessageBox.Show(gameOverMessage, "Game Over");
-                gameOverShown = true;
-            } else if (gameOverShown)
-            {
-                return;
-            }
-            
+            MessageBox.Show(gameOverMessage, "Game Over");
         }
 
         private void Form4_Activated(object sender, EventArgs e)
