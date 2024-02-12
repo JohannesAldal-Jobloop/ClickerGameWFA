@@ -257,11 +257,12 @@ namespace ClickerGame
                 row--;
 
                 // Checks if the row variable is valid.
-                // If not returns to hinder a crash.
+                // If not shows game over message and returns
+                // to stop the movement that would cause a crash.
                 if (row == -1)
                 {
-                    //GameOverMessage();
                     autoMovementTimer.Stop();
+                    GameOverMessage();
                     return;
                 }
 
@@ -276,11 +277,13 @@ namespace ClickerGame
                 row++;
 
                 // Checks if the row variable is valid.
-                // If not returns to hinder a crash.
+                // If not shows game over message and returns
+                // to stop the movement that would cause a crash.
                 if (row >= snakeGrid.RowCount)
                 {
-                    //GameOverMessage();
+                    
                     autoMovementTimer.Stop();
+                    GameOverMessage();
                     return;
                 }
 
@@ -295,11 +298,12 @@ namespace ClickerGame
                 col++;
 
                 // Checks if the row variable is valid.
-                // If not returns to hinder a crash.
+                // If not shows game over message and returns
+                // to stop the movement that would cause a crash.
                 if (col >= snakeGrid.ColumnCount)
                 {
-                    //GameOverMessage();
                     autoMovementTimer.Stop();
+                    GameOverMessage();
                     return;
                 }
 
@@ -314,11 +318,12 @@ namespace ClickerGame
                 col--;
 
                 // Checks if the row variable is valid.
-                // If not returns to hinder a crash.
+                // If not shows game over message and returns
+                // to stop the movement that would cause a crash.
                 if (col == -1)
                 {
-                    //GameOverMessage();
                     autoMovementTimer.Stop();
+                    GameOverMessage();
                     return;
                 }
 
