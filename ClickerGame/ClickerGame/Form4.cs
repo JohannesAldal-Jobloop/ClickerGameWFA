@@ -51,14 +51,11 @@ namespace ClickerGame
             //------------------------------------------------
 
             gridMaxPosition = snakeGrid.ColumnCount;
-
-            
-            
         }
 
         //---------- MOVEMENT CHECKS ----------
 
-        // Must comment
+        // Checks if the position the snakHead wants to move to has an apple.
         private void CheckForApple(int row, int col)
         {
             // Checks if the row its trying to move to has the apple.
@@ -358,7 +355,7 @@ namespace ClickerGame
             randomCol = random.Next(gridMinPosition, gridMaxPosition);
             randomRow = random.Next(gridMinPosition, gridMaxPosition);
 
-            // Checks if the random position is teh same as the snakes posistion.
+            // Checks if the random position is the same as the snakes posistion.
             // If true randomise again.
             CheckForSnake(randomRow, randomCol);
             if (randomCol == snakeGrid.GetColumn(snakeHead) && randomRow == snakeGrid.GetRow(snakeHead) && snakeFound)
@@ -373,12 +370,14 @@ namespace ClickerGame
             MessageBox.Show(gameOverMessage, "Game Over");
         }
 
+        // Gets called eich time the window gets activated.
         private void Form4_Activated(object sender, EventArgs e)
         {
-            
-
+            // Checks if the grids row and col count is the same.
+            // If not show error and close game.
             if (snakeGrid.RowCount == snakeGrid.ColumnCount)
             {
+                // Start game
                 autoMovementTimer.Start();
                 autoMoveDirection = "up";
                 RandomRowCol();
@@ -391,6 +390,7 @@ namespace ClickerGame
             }
         }
         
+        // Function that listens to keypresses.
         private void Form4_KeyDown(object sender, KeyEventArgs e)
         {
             //---------- Snake WSDA movement----------
@@ -405,7 +405,7 @@ namespace ClickerGame
             //----------------------------------------
 
             //----------- Snake WSDA direction change ----------
-            // checks for WSDA input and changes its move direction acordingly
+            // checks for WSDA input and changes move direction acordingly
 
             if (e.KeyCode == Keys.W && autoMoveDirection != "down")
             {
@@ -427,14 +427,18 @@ namespace ClickerGame
 
         }
         
+        // Gets called ech tick decided by timer1's interval.
         private void timer1_Tick(object sender, EventArgs e)
         {
+            // Gets the position of snakeHead every tick.
             int row = snakeGrid.GetRow(snakeHead);
             int col = snakeGrid.GetColumn(snakeHead);
 
+            // Saves the previous posistions in two variables.
             int previousRow = row;
             int previousCol = col;
 
+            // Calls AutoMovement() once every tick
             AutoMovement(row, col, previousRow, previousCol);
         }
     }
