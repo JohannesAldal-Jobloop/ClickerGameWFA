@@ -24,6 +24,8 @@ namespace ClickerGame
         public int gridMaxPosition;
 
         public string autoMoveDirection;
+        private string hitEdgeGameOverMessage = "You hit the edge!";
+        private string hitSnakeGameOverMessage = "You hit your own snake body!";
 
         public bool gameOverShown = false;
         public bool appleFound = false;
@@ -54,6 +56,7 @@ namespace ClickerGame
 
         //---------- MOVEMENT CHECKS ----------
 
+        // Must comment
         private void CheckForApple(int row, int col)
         {
             // Checks if the row its trying to move to has the apple.
@@ -82,39 +85,52 @@ namespace ClickerGame
             {
                 appleFound = false;
             }
-        }
+        } 
 
-        // Checks the next cell the snakeHead wants to,
-        // if there is a snakeBodyPice there or the snakeHead
+        // Checks the next cell the snakeHead wants to move to,
+        // if there is a snakeBodyPice snakeFound = true
         private void CheckForSnake(int row, int col)
         {
             // Checks if the row its trying to move to has a snake pice.
             // If true changes the apple for another snake pice.
-            int snakeRow = snakeGrid.GetRow(snakeHead);
-            int snakeCol = snakeGrid.GetColumn(snakeHead);
+            //int snakeRow = snakeGrid.GetRow(snakeHead);
+            //int snakeCol = snakeGrid.GetColumn(snakeHead);
 
-            int snakebodycount = snakeBodyPices.Count;
+            //int snakebodycount = snakeBodyPices.Count;
 
-            for (int i = 0; i < snakeBodyPices.Count; i++)
+            //snakeFound = true;
+
+            foreach(FlowLayoutPanel snakeBody in snakeBodyPices)
             {
-                if (snakeMovesLoggRow[i] == row && snakeMovesLoggCol[i] == col)
+                int snakeBodyRow = snakeGrid.GetRow(snakeBody);
+                int snakeBodyCol = snakeGrid.GetColumn(snakeBody);
+
+                if( row ==  snakeBodyRow && col == snakeBodyCol)
                 {
                     snakeFound = true;
                 }
-                else
-                {
-                    snakeFound = false;
-                }
             }
 
-            if (row == snakeRow && col == snakeCol)
-            {
-                snakeFound = true;
-            }
-            else
-            {
-                snakeFound = false;
-            }
+            //for (int i = 0; i < snakeBodyPices.Count; i++)
+            //{
+            //    //if (snakeMovesLoggRow[i] == row && snakeMovesLoggCol[i] == col)
+            //    //{
+            //    //    snakeFound = true;
+            //    //}
+            //    //else
+            //    //{
+            //    //    snakeFound = false;
+            //    }
+            //}
+
+            //if (row == snakeRow && col == snakeCol)
+            //{
+            //    snakeFound = true;
+            //}
+            //else
+            //{
+            //    snakeFound = false;
+            //}
         }
 
         // Collects all the nessesery checks for one move of the snake in one function.
@@ -122,13 +138,20 @@ namespace ClickerGame
         {
             // Checks for an apple or a snake pice
             // in the cell it wants to move to
-            CheckForSnake(row, col);
-            CheckForApple(row, col);
-
+            if(snakeBodyPices.Count != 0)
+            {
+                CheckForSnake(row, col);
+            }
+                
             if (snakeFound)
             {
-                GameOverMessage();
+                autoMovementTimer.Stop();
+                GameOverMessage(hitSnakeGameOverMessage);
             }
+
+            CheckForApple(row, col);
+
+            
 
             // If none of the checks results in a game over logg the move.
             LoggPreviousMoves(previousRow, previousCol);
@@ -262,7 +285,7 @@ namespace ClickerGame
                 if (row == -1)
                 {
                     autoMovementTimer.Stop();
-                    GameOverMessage();
+                    GameOverMessage(hitEdgeGameOverMessage);
                     return;
                 }
 
@@ -283,7 +306,7 @@ namespace ClickerGame
                 {
                     
                     autoMovementTimer.Stop();
-                    GameOverMessage();
+                    GameOverMessage(hitEdgeGameOverMessage);
                     return;
                 }
 
@@ -303,7 +326,7 @@ namespace ClickerGame
                 if (col >= snakeGrid.ColumnCount)
                 {
                     autoMovementTimer.Stop();
-                    GameOverMessage();
+                    GameOverMessage(hitEdgeGameOverMessage);
                     return;
                 }
 
@@ -323,7 +346,7 @@ namespace ClickerGame
                 if (col == -1)
                 {
                     autoMovementTimer.Stop();
-                    GameOverMessage();
+                    GameOverMessage(hitEdgeGameOverMessage);
                     return;
                 }
 
@@ -341,7 +364,7 @@ namespace ClickerGame
 
 
 
-        // setts randomCol and randomRow to two random intesgers
+        // Setts randomCol and randomRow to two random intesgers
         private void RandomRowCol()
         {
             Random random = new Random();
@@ -357,11 +380,11 @@ namespace ClickerGame
             }
         }
 
-        private void GameOverMessage()
+        private void GameOverMessage(string gameOverMessage)
         {
             if (!gameOverShown)
             {
-                MessageBox.Show("Game Over", "Game Over");
+                MessageBox.Show(gameOverMessage, "Game Over");
                 gameOverShown = true;
             } else if (gameOverShown)
             {

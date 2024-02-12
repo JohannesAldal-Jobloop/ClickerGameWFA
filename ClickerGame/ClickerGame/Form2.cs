@@ -39,7 +39,7 @@ namespace ClickerGame
 
         private void button3_Click(object sender, EventArgs e)
         {
-            // Changes form to the memory game.
+            // Changes form to the Snake game.
             // (Form2 -> Form4)
             game3.ShowDialog();
         }
