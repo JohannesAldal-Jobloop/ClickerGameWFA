@@ -11,3 +11,5 @@ C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\Cli
 C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.Form2.resources
 C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.Form3.resources
 C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.Form4.resources
+C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.Form5.resources
+C:\Users\johsa\source\repos\ClickerGameWFA\ClickerGame\ClickerGame\obj\Debug\ClickerGame.Form6.resources
