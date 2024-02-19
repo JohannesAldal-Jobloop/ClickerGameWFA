@@ -30,9 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.snakeGrid = new System.Windows.Forms.TableLayoutPanel();
-            this.autoMovementTimer = new System.Windows.Forms.Timer(this.components);
             this.snakeHead = new System.Windows.Forms.FlowLayoutPanel();
             this.apple = new System.Windows.Forms.FlowLayoutPanel();
+            this.autoMovementTimer = new System.Windows.Forms.Timer(this.components);
             this.snakeGrid.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -312,8 +312,7 @@
             this.snakeGrid.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.snakeGrid.Controls.Add(this.snakeHead, 6, 4);
             this.snakeGrid.Controls.Add(this.apple, 0, 0);
-            this.snakeGrid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.snakeGrid.Location = new System.Drawing.Point(0, 0);
+            this.snakeGrid.Location = new System.Drawing.Point(39, 49);
             this.snakeGrid.Name = "snakeGrid";
             this.snakeGrid.RowCount = 10;
             this.snakeGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
@@ -326,20 +325,15 @@
             this.snakeGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.snakeGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.snakeGrid.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.snakeGrid.Size = new System.Drawing.Size(682, 653);
+            this.snakeGrid.Size = new System.Drawing.Size(602, 602);
             this.snakeGrid.TabIndex = 0;
-            // 
-            // autoMovementTimer
-            // 
-            this.autoMovementTimer.Interval = 500;
-            this.autoMovementTimer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // snakeHead
             // 
             this.snakeHead.BackColor = System.Drawing.Color.Green;
-            this.snakeHead.Location = new System.Drawing.Point(411, 263);
+            this.snakeHead.Location = new System.Drawing.Point(363, 243);
             this.snakeHead.Name = "snakeHead";
-            this.snakeHead.Size = new System.Drawing.Size(62, 59);
+            this.snakeHead.Size = new System.Drawing.Size(54, 54);
             this.snakeHead.TabIndex = 0;
             // 
             // apple
@@ -347,8 +341,13 @@
             this.apple.BackColor = System.Drawing.Color.Red;
             this.apple.Location = new System.Drawing.Point(3, 3);
             this.apple.Name = "apple";
-            this.apple.Size = new System.Drawing.Size(62, 59);
+            this.apple.Size = new System.Drawing.Size(54, 54);
             this.apple.TabIndex = 1;
+            // 
+            // autoMovementTimer
+            // 
+            this.autoMovementTimer.Interval = 500;
+            this.autoMovementTimer.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form4
             // 
