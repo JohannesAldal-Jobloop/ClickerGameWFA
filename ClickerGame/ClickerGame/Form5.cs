@@ -14,15 +14,10 @@ namespace ClickerGame
 {
     public partial class Form5 : Form
     {
-        // Arrays with all the start positions of the squares of the Tetrominos.
-        //private int[] piceI = {0,0, 1,0, 2,0, 3,0};
-        //private int[] piceO = {0,0, 1,0, 0,1, 1,1};
-        //private int[] piceT = {1,0, 0,1, 1,1, 2,1};
-        //private int[] piceS = {1,0, 2,0, 0,1, 1,1};
-        //private int[] piceZ = {0,0, 1,0, 1,1, 2,0};
-        //private int[] piceJ = {0,0, 0,1, 1,1, 2,1};
-        //private int[] piceL = {2,0, 0,1, 1,1, 2,1};
+        private int fallingRow = 0;
 
+        // All the Tetrominos as arrays with all the positions of the blocks.
+        // Uses the custom class CellPosition to save the column and row for eich block.
         private CellPosition[] piceI = new CellPosition[4]
         {
             new CellPosition(0, 0),
@@ -30,7 +25,6 @@ namespace ClickerGame
             new CellPosition(2, 0),
             new CellPosition(3, 0)
         };
-
         private CellPosition[] piceO = new CellPosition[4]
         {
             new CellPosition(0, 0),
@@ -38,7 +32,6 @@ namespace ClickerGame
             new CellPosition(0, 1),
             new CellPosition(1, 1)
         };
-
         private CellPosition[] piceT = new CellPosition[4]
         {
             new CellPosition(1, 0),
@@ -46,7 +39,6 @@ namespace ClickerGame
             new CellPosition(1, 1),
             new CellPosition(2, 1)
         };
-
         private CellPosition[] piceS = new CellPosition[4]
         {
             new CellPosition(1, 0),
@@ -54,7 +46,6 @@ namespace ClickerGame
             new CellPosition(0, 1),
             new CellPosition(1, 1)
         };
-
         private CellPosition[] piceZ = new CellPosition[4]
         {
             new CellPosition(1, 1),
@@ -62,7 +53,6 @@ namespace ClickerGame
             new CellPosition(2, 2),
             new CellPosition(3, 2)
         };
-
         private CellPosition[] piceJ = new CellPosition[4]
         {
             new CellPosition(0, 0),
@@ -70,7 +60,6 @@ namespace ClickerGame
             new CellPosition(1, 1),
             new CellPosition(2, 1)
         };
-
         private CellPosition[] piceL = new CellPosition[4]
         {
             new CellPosition(2, 0),
@@ -79,6 +68,7 @@ namespace ClickerGame
             new CellPosition(2, 1)
         };
 
+        private List<FlowLayoutPanel> fallingTetromino = new List<FlowLayoutPanel>();
 
 
         public Form5()
@@ -94,9 +84,10 @@ namespace ClickerGame
              piceJ
              piceL
              */
-            MakeTetrominoInGridd(piceS);
+            MakeTetrominoInGridd(piceO, Color.Yellow);
         }
 
+    // Custom class to save a column and a row.
     class CellPosition
         {
             public int Col {  get; }
@@ -109,15 +100,32 @@ namespace ClickerGame
             }
         }
 
-        private void MakeTetrominoInGridd(CellPosition[] piceArray)
+        // Function that makes the Tetromino in the playfield gridd
+        // using the piceArray array
+        private void MakeTetrominoInGridd(CellPosition[] pice, Color color, int startingRow)
         {
+            // Uses a for loop to make sure it only loops 4 times couse
+            // thats how many blocks all the Tetrominos are made with.
             for (int i = 0; i < 4; i++)
             {
+                // Makes a new FlowLayoutPanel and setts the color to make it visible.
                 FlowLayoutPanel newBlock = new FlowLayoutPanel();
-                newBlock.BackColor = Color.Cyan;
-                newBlock.Dock = DockStyle.Fill;
+                newBlock.BackColor = color;
 
-                playfield.Controls.Add(newBlock, piceArray[i].Col, piceArray[i].Row);
+                fallingTetromino.Add(newBlock);
+
+                playfield.Controls.Add(newBlock, pice[i].Col, pice[i].Row);
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+
+
+            for(int i = 0; i < 4; i++)
+            {
+                playfield.Controls.Remove(fallingTetromino[i]);
+                playfield.Controls.Add(fallingTetromino[i]);
             }
         }
     }

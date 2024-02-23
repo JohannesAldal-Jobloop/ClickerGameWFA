@@ -131,6 +131,10 @@
             this.levelText.TabIndex = 4;
             this.levelText.Text = "0";
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form5
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
