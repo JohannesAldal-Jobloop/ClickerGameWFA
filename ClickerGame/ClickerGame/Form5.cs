@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,56 +18,58 @@ namespace ClickerGame
         private int fallingRow = 0;
 
         // All the Tetrominos as arrays with all the positions of the blocks.
-        // Uses the custom class CellPosition to save the column and row for eich block.
-        private CellPosition[] piceI = new CellPosition[4]
-        {
-            new CellPosition(0, 0),
-            new CellPosition(1, 0),
-            new CellPosition(2, 0),
-            new CellPosition(3, 0)
-        };
-        private CellPosition[] piceO = new CellPosition[4]
-        {
-            new CellPosition(0, 0),
-            new CellPosition(1, 0),
-            new CellPosition(0, 1),
-            new CellPosition(1, 1)
-        };
-        private CellPosition[] piceT = new CellPosition[4]
-        {
-            new CellPosition(1, 0),
-            new CellPosition(0, 1),
-            new CellPosition(1, 1),
-            new CellPosition(2, 1)
-        };
-        private CellPosition[] piceS = new CellPosition[4]
-        {
-            new CellPosition(1, 0),
-            new CellPosition(2, 0),
-            new CellPosition(0, 1),
-            new CellPosition(1, 1)
-        };
-        private CellPosition[] piceZ = new CellPosition[4]
-        {
-            new CellPosition(1, 1),
-            new CellPosition(2, 1),
-            new CellPosition(2, 2),
-            new CellPosition(3, 2)
-        };
-        private CellPosition[] piceJ = new CellPosition[4]
-        {
-            new CellPosition(0, 0),
-            new CellPosition(0, 1),
-            new CellPosition(1, 1),
-            new CellPosition(2, 1)
-        };
-        private CellPosition[] piceL = new CellPosition[4]
-        {
-            new CellPosition(2, 0),
-            new CellPosition(0, 1),
-            new CellPosition(1, 1),
-            new CellPosition(2, 1)
-        };
+        //// Uses the custom class CellPosition to save the column and row for eich block.
+        //private CellPosition[] piceI = new CellPosition[4]
+        //{
+        //    new CellPosition(0, 0),
+        //    new CellPosition(1, 0),
+        //    new CellPosition(2, 0),
+        //    new CellPosition(3, 0)
+        //};
+        //private CellPosition[] piceO = new CellPosition[4]
+        //{
+        //    new CellPosition(0, 0),
+        //    new CellPosition(1, 0),
+        //    new CellPosition(0, 1),
+        //    new CellPosition(1, 1)
+        //};
+        //private CellPosition[] piceT = new CellPosition[4]
+        //{
+        //    new CellPosition(1, 0),
+        //    new CellPosition(0, 1),
+        //    new CellPosition(1, 1),
+        //    new CellPosition(2, 1)
+        //};
+        //private CellPosition[] piceS = new CellPosition[4]
+        //{
+        //    new CellPosition(1, 0),
+        //    new CellPosition(2, 0),
+        //    new CellPosition(0, 1),
+        //    new CellPosition(1, 1)
+        //};
+        //private CellPosition[] piceZ = new CellPosition[4]
+        //{
+        //    new CellPosition(1, 1),
+        //    new CellPosition(2, 1),
+        //    new CellPosition(2, 2),
+        //    new CellPosition(3, 2)
+        //};
+        //private CellPosition[] piceJ = new CellPosition[4]
+        //{
+        //    new CellPosition(0, 0),
+        //    new CellPosition(0, 1),
+        //    new CellPosition(1, 1),
+        //    new CellPosition(2, 1)
+        //};
+        //private CellPosition[] piceL = new CellPosition[4]
+        //{
+        //    new CellPosition(2, 0),
+        //    new CellPosition(0, 1),
+        //    new CellPosition(1, 1),
+        //    new CellPosition(2, 1)
+        //};
+
+        private int[] startPosition = {3, 0};
 
         private List<FlowLayoutPanel> fallingTetromino = new List<FlowLayoutPanel>();
 
@@ -84,7 +87,11 @@ namespace ClickerGame
              piceJ
              piceL
              */
-            MakeTetrominoInGridd(piceO, Color.Yellow);
+            //MakeTetrominoInGridd(piceO, Color.Yellow);
+
+            //TestPiceIFunc(startPosition);
+
+            timer1.Start();
         }
 
     // Custom class to save a column and a row.
@@ -102,7 +109,7 @@ namespace ClickerGame
 
         // Function that makes the Tetromino in the playfield gridd
         // using the piceArray array
-        private void MakeTetrominoInGridd(CellPosition[] pice, Color color, int startingRow)
+        private void MakeTetrominoInGridd(CellPosition[] pice, Color color)
         {
             // Uses a for loop to make sure it only loops 4 times couse
             // thats how many blocks all the Tetrominos are made with.
@@ -118,15 +125,66 @@ namespace ClickerGame
             }
         }
 
+        private void RemovePice(List<FlowLayoutPanel> piceToRemove)
+        {
+            for(int i = 0;i < piceToRemove.Count; i++)
+            {
+                playfield.Controls.Remove(piceToRemove[i]);
+            }
+        }
+
+        private void TestPiceIFunc(int[] position)
+        {
+            int piceCount = 0;
+
+            RemovePice(fallingTetromino);
+
+            for (int i = 0; i < 4; i++)
+            {
+                // Makes a new FlowLayoutPanel and setts the color to make it visible.
+                FlowLayoutPanel newBlock = new FlowLayoutPanel();
+                //piceCount++;
+                //string piceCountString = piceCount.ToString();
+                //newBlock.Name = "piceI_" + piceCountString;
+                newBlock.BackColor = Color.Cyan;
+
+                fallingTetromino.Add(newBlock);
+
+                if(i >= 1)
+                {
+                    position[0] += 1;
+                }
+
+                playfield.Controls.Add(newBlock, position[0], position[1]);
+            }
+        }
+
+        //public Stack<int> NumbersIn(int value)
+        //{
+        //    if (value == 0) return new Stack<int>();
+
+        //    var numbers = NumbersIn(value / 10);
+
+        //    numbers.Push(value % 10);
+
+        //    return numbers;
+        //}
+
+        //int numbers = NumbersIn(987654321).ToArray();
+
         private void timer1_Tick(object sender, EventArgs e)
         {
+            startPosition[1] += 1;
+            TestPiceIFunc(startPosition);
 
+            //int col;
+            //int row;
 
-            for(int i = 0; i < 4; i++)
-            {
-                playfield.Controls.Remove(fallingTetromino[i]);
-                playfield.Controls.Add(fallingTetromino[i]);
-            }
+            //for(int i = 0; i < 4; i++)
+            //{
+            //    playfield.Controls.Remove(fallingTetromino[i]);
+            //    playfield.Controls.Add(fallingTetromino[i]);
+            //}
         }
     }
 }
