@@ -69,7 +69,7 @@ namespace ClickerGame
         //    new CellPosition(2, 1)
         //};
 
-        private int[] startPosition = {3, 0};
+        private int[] startPosition = {0, 0};
 
         private List<FlowLayoutPanel> fallingTetromino = new List<FlowLayoutPanel>();
 
@@ -135,17 +135,13 @@ namespace ClickerGame
 
         private void TestPiceIFunc(int[] position)
         {
-            int piceCount = 0;
-
             RemovePice(fallingTetromino);
+            position[0] = 0;
 
             for (int i = 0; i < 4; i++)
             {
                 // Makes a new FlowLayoutPanel and setts the color to make it visible.
                 FlowLayoutPanel newBlock = new FlowLayoutPanel();
-                //piceCount++;
-                //string piceCountString = piceCount.ToString();
-                //newBlock.Name = "piceI_" + piceCountString;
                 newBlock.BackColor = Color.Cyan;
 
                 fallingTetromino.Add(newBlock);
@@ -174,8 +170,8 @@ namespace ClickerGame
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            startPosition[1] += 1;
             TestPiceIFunc(startPosition);
+            startPosition[1] += 1;
 
             //int col;
             //int row;
