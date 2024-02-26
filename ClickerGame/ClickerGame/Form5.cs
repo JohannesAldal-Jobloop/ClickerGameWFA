@@ -87,9 +87,6 @@ namespace ClickerGame
              piceJ
              piceL
              */
-            //MakeTetrominoInGridd(piceO, Color.Yellow);
-
-            //TestPiceIFunc(startPosition);
 
             timer1.Start();
         }
@@ -107,80 +104,267 @@ namespace ClickerGame
             }
         }
 
-        // Function that makes the Tetromino in the playfield gridd
-        // using the piceArray array
-        private void MakeTetrominoInGridd(CellPosition[] pice, Color color)
-        {
-            // Uses a for loop to make sure it only loops 4 times couse
-            // thats how many blocks all the Tetrominos are made with.
-            for (int i = 0; i < 4; i++)
-            {
-                // Makes a new FlowLayoutPanel and setts the color to make it visible.
-                FlowLayoutPanel newBlock = new FlowLayoutPanel();
-                newBlock.BackColor = color;
-
-                fallingTetromino.Add(newBlock);
-
-                playfield.Controls.Add(newBlock, pice[i].Col, pice[i].Row);
-            }
-        }
-
+        // Function that removes the pice from the playfield.
         private void RemovePice(List<FlowLayoutPanel> piceToRemove)
         {
+            // Goes thru all the items in the piceToRemove list
+            // and removes eich one.
             for(int i = 0;i < piceToRemove.Count; i++)
             {
                 playfield.Controls.Remove(piceToRemove[i]);
             }
         }
 
-        private void TestPiceIFunc(int[] position)
+        //---------- Functions that make the pice at the target position ----------
+
+        // piceI
+        private void PiceIFunc(int[] position)
         {
+            // Removes the FlowLayoutPannels on the previous position
             RemovePice(fallingTetromino);
+            
+            // setts the start position of the pice making to sero to get it to start correctly.
             position[0] = 0;
 
+            // Goes 4 times to create all the FlowLayoutPanels needed to create the pice.
             for (int i = 0; i < 4; i++)
             {
                 // Makes a new FlowLayoutPanel and setts the color to make it visible.
                 FlowLayoutPanel newBlock = new FlowLayoutPanel();
                 newBlock.BackColor = Color.Cyan;
 
+                // Adds the newly created FlowLayoutPanel to an array
                 fallingTetromino.Add(newBlock);
 
-                if(i >= 1)
+                // Changes the position to where the next FlowLayoutPanel needs to be. 
+                if (i >= 1)
                 {
                     position[0] += 1;
                 }
 
+                // Adds the newBlock to the playfield.
+                playfield.Controls.Add(newBlock, position[0], position[1]);
+            }
+        }
+        private void PiceOFunc(int[] position)
+        {
+            // Removes the FlowLayoutPannels on the previous position
+            RemovePice(fallingTetromino);
+
+            // setts the start position of the pice making to sero to get it to start correctly.
+            position[0] = 0;
+
+            // Goes 4 times to create all the FlowLayoutPanels needed to create the pice.
+            for (int i = 0; i < 4; i++)
+            {
+                // Makes a new FlowLayoutPanel and setts the color to make it visible.
+                FlowLayoutPanel newBlock = new FlowLayoutPanel();
+                newBlock.BackColor = Color.Yellow;
+
+                // Adds the newly created FlowLayoutPanel to an array
+                fallingTetromino.Add(newBlock);
+
+                // Changes the position to where the next FlowLayoutPanel needs to be.
+                if(i == 1 || i == 3)
+                {
+                    position[0] += 1;
+                }else if(i == 2)
+                {
+                    position[0] = 0;
+                    position[1] += 1;
+                }
+
+                // Adds the newBlock to the playfield.
+                playfield.Controls.Add(newBlock, position[0], position[1]);
+            }
+        }
+        private void PiceTFunc(int[] position)
+        {
+            // Removes the FlowLayoutPannels on the previous position
+            RemovePice(fallingTetromino);
+
+            // setts the start position of the pice making to sero to get it to start correctly.
+            position[0] = 0;
+
+            // Goes 4 times to create all the FlowLayoutPanels needed to create the pice.
+            for (int i = 0; i < 4; i++)
+            {
+                // Makes a new FlowLayoutPanel and setts the color to make it visible.
+                FlowLayoutPanel newBlock = new FlowLayoutPanel();
+                newBlock.BackColor = Color.Purple;
+
+                // Adds the newly created FlowLayoutPanel to an array
+                fallingTetromino.Add(newBlock);
+
+                // Changes the position to where the next FlowLayoutPanel needs to be.
+                if (i <= 2)
+                {
+                    position[0] += 1;
+                }else if(i == 3)
+                {
+                    position[0] -= 1;
+                    position[1] -= 1;
+                }else if (i == 4)
+                {
+                    position[1] -= 1;
+                }
+
+                // Adds the newBlock to the playfield.
+                playfield.Controls.Add(newBlock, position[0], position[1]);
+            }
+        }
+        private void PiceSFunc(int[] position)
+        {
+            // Removes the FlowLayoutPannels on the previous position
+            RemovePice(fallingTetromino);
+
+            // setts the start position of the pice making to sero to get it to start correctly.
+            position[0] = 0;
+
+            // Goes 4 times to create all the FlowLayoutPanels needed to create the pice.
+            for (int i = 0; i < 4; i++)
+            {
+                // Makes a new FlowLayoutPanel and setts the color to make it visible.
+                FlowLayoutPanel newBlock = new FlowLayoutPanel();
+                newBlock.BackColor = Color.Lime;
+
+                // Adds the newly created FlowLayoutPanel to an array
+                fallingTetromino.Add(newBlock);
+
+                // Changes the position to where the next FlowLayoutPanel needs to be.
+                if (i == 0)
+                {
+                    position[0] += 1;
+                }
+                else if (i <= 2)
+                {
+                    position[0] += 1;
+                }
+                else if (i == 3)
+                {
+                    position[1] += 1;
+                    position[0] -= 2;
+                }
+                else
+                {
+                    position[0] += 1;
+                }
+
+
+
+                // Adds the newBlock to the playfield.
+                playfield.Controls.Add(newBlock, position[0], position[1]);
+            }
+        }
+        private void PiceZFunc(int[] position)
+        {
+            // Removes the FlowLayoutPannels on the previous position
+            RemovePice(fallingTetromino);
+
+            // setts the start position of the pice making to sero to get it to start correctly.
+            position[0] = 0;
+
+            // Goes 4 times to create all the FlowLayoutPanels needed to create the pice.
+            for (int i = 0; i < 4; i++)
+            {
+                // Makes a new FlowLayoutPanel and setts the color to make it visible.
+                FlowLayoutPanel newBlock = new FlowLayoutPanel();
+                newBlock.BackColor = Color.Yellow;
+
+                // Adds the newly created FlowLayoutPanel to an array
+                fallingTetromino.Add(newBlock);
+
+                // Changes the position to where the next FlowLayoutPanel needs to be.
+                if (i == 1 || i == 3)
+                {
+                    position[0] += 1;
+                }
+                else if (i == 2)
+                {
+                    position[0] = 0;
+                    position[1] += 1;
+                }
+
+                // Adds the newBlock to the playfield.
+                playfield.Controls.Add(newBlock, position[0], position[1]);
+            }
+        }
+        private void PiceJFunc(int[] position)
+        {
+            // Removes the FlowLayoutPannels on the previous position
+            RemovePice(fallingTetromino);
+
+            // setts the start position of the pice making to sero to get it to start correctly.
+            position[0] = 0;
+
+            // Goes 4 times to create all the FlowLayoutPanels needed to create the pice.
+            for (int i = 0; i < 4; i++)
+            {
+                // Makes a new FlowLayoutPanel and setts the color to make it visible.
+                FlowLayoutPanel newBlock = new FlowLayoutPanel();
+                newBlock.BackColor = Color.Yellow;
+
+                // Adds the newly created FlowLayoutPanel to an array
+                fallingTetromino.Add(newBlock);
+
+                // Changes the position to where the next FlowLayoutPanel needs to be.
+                if (i == 1 || i == 3)
+                {
+                    position[0] += 1;
+                }
+                else if (i == 2)
+                {
+                    position[0] = 0;
+                    position[1] += 1;
+                }
+
+                // Adds the newBlock to the playfield.
+                playfield.Controls.Add(newBlock, position[0], position[1]);
+            }
+        }
+        private void PiceLFunc(int[] position)
+        {
+            // Removes the FlowLayoutPannels on the previous position
+            RemovePice(fallingTetromino);
+
+            // setts the start position of the pice making to sero to get it to start correctly.
+            position[0] = 0;
+
+            // Goes 4 times to create all the FlowLayoutPanels needed to create the pice.
+            for (int i = 0; i < 4; i++)
+            {
+                // Makes a new FlowLayoutPanel and setts the color to make it visible.
+                FlowLayoutPanel newBlock = new FlowLayoutPanel();
+                newBlock.BackColor = Color.Yellow;
+
+                // Adds the newly created FlowLayoutPanel to an array
+                fallingTetromino.Add(newBlock);
+
+                // Changes the position to where the next FlowLayoutPanel needs to be.
+                if (i == 1 || i == 3)
+                {
+                    position[0] += 1;
+                }
+                else if (i == 2)
+                {
+                    position[0] = 0;
+                    position[1] += 1;
+                }
+
+                // Adds the newBlock to the playfield.
                 playfield.Controls.Add(newBlock, position[0], position[1]);
             }
         }
 
-        //public Stack<int> NumbersIn(int value)
-        //{
-        //    if (value == 0) return new Stack<int>();
 
-        //    var numbers = NumbersIn(value / 10);
 
-        //    numbers.Push(value % 10);
-
-        //    return numbers;
-        //}
-
-        //int numbers = NumbersIn(987654321).ToArray();
+        //-------------------------------------------------------------------------
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            TestPiceIFunc(startPosition);
+            PiceSFunc(startPosition);
             startPosition[1] += 1;
 
-            //int col;
-            //int row;
-
-            //for(int i = 0; i < 4; i++)
-            //{
-            //    playfield.Controls.Remove(fallingTetromino[i]);
-            //    playfield.Controls.Add(fallingTetromino[i]);
-            //}
         }
     }
 }
